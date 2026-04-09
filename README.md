@@ -269,7 +269,7 @@
 
 ```bash
 # 1️⃣ Clone repository
-git clone https://github.com/yourusername/crack-sms-v21.git
+git clone https://github.com/Adnan57400/CRACKSMSREBOT.git
 cd crack-sms-v21
 
 # 2️⃣ Create virtual environment
