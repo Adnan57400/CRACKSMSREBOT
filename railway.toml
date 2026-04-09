@@ -1,0 +1,32 @@
+[build]
+buildCommand = "pip install -r requirements.txt"
+
+[deploy]
+startCommand = "python bot.py"
+restartPolicyType = "always"
+restartPolicyMaxRetries = 5
+
+[environments.production]
+startCommand = "python bot.py"
+
+[environments.staging]
+startCommand = "python bot.py"
+
+[services.main]
+name = "bot"
+cmd = "python bot.py"
+numReplicas = 1
+
+[env]
+PYTHONUNBUFFERED = "1"
+PYTHONIOENCODING = "utf-8"
+ENVIRONMENT = "production"
+
+[healthcheck]
+path = "/"
+interval = 30
+timeout = 5
+retries = 3
+
+[logging]
+level = "INFO"

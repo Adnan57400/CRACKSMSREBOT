@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  bot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: crack-sms-bot
+    environment:
+      - PYTHONUNBUFFERED=1
+      - PYTHONIOENCODING=utf-8
+      - ENVIRONMENT=production
+    volumes:
+      - ./sms_database_np.db:/app/sms_database_np.db
+      - ./bot.log:/app/bot.log
+      - ./config.json:/app/config.json
+      - ./otp_store.json:/app/otp_store.json
+      - ./dex.txt:/app/dex.txt
+    restart: always
+    networks:
+      - bot-network
+    healthcheck:
+      test: ["CMD", "python", "-c", "print('ok')"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 40s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 512M
+        reservations:
+          cpus: '0.5'
+          memory: 256M
+
+volumes:
+  bot-data:
+
+networks:
+  bot-network:
+    driver: bridge
